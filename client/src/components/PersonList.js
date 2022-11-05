@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const PersonList = (props) => {
@@ -13,13 +14,19 @@ const PersonList = (props) => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [setPeople])
 
     return (
         <div>
             {
                 people.map((person, index) => {
-                    return <p key={index} > {person.lastName}, {person.firstName}</p> 
+                    return (
+                        <div key={index}>
+                            <p>{person.lastName}</p>
+                            <p>{person.firstName}</p>
+                            <Link to={`/people/${person._id}`}>{person.firstName}'s Page!</Link>
+                        </div>
+                    )
                 })
             }
         </div>
