@@ -27,7 +27,7 @@ const Update = (props) => {
       })
       .then((res) => {
         console.log(res);
-        navigate("/home");
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
