@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DeleteButton from "./DeleteButton";
 
 const PersonList = (props) => {
-  const { deletePerson, people } = props;
+  const { people, setPeople } = props;
+
+  const removeFromDom = (personId) => {
+    setPeople(people.filter((person) => person._id !== personId));
+  };
 
   return (
     <div>
@@ -15,13 +20,10 @@ const PersonList = (props) => {
             <span> | </span>
             <Link to={`/people/edit/${person._id}`}>Edit</Link>
             <span> | </span>
-            <button
-              onClick={(e) => {
-                deletePerson(person._id);
-              }}
-            >
-              Delete
-            </button>
+            <DeleteButton
+              personId={person._id}
+              successCallback={() => removeFromDom(person._id)}
+            />
           </div>
         );
       })}

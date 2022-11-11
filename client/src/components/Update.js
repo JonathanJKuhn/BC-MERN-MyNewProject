@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import PersonForm from "./PersonForm";
+import DeleteButton from "./DeleteButton";
 
 const Update = () => {
   const { id } = useParams();
@@ -33,11 +34,17 @@ const Update = () => {
     <div>
       <h1>Update a Person</h1>
       {loaded && (
-        <PersonForm
-          onSubmitProp={updatePerson}
-          initialFirstName={person.firstName}
-          initialLastName={person.lastName}
-        />
+        <>
+          <PersonForm
+            onSubmitProp={updatePerson}
+            initialFirstName={person.firstName}
+            initialLastName={person.lastName}
+          />
+          <DeleteButton
+            personId={person._id}
+            successCallback={() => navigate("/")}
+          />
+        </>
       )}
     </div>
   );

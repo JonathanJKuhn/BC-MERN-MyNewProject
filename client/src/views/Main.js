@@ -17,15 +17,6 @@ const Main = () => {
       });
   }, [setPeople]);
 
-  const deletePerson = (personId) => {
-    axios
-      .delete(`http://localhost:8000/api/people/${personId}`)
-      .then(() => {
-        setPeople(people.filter((person) => person._id !== personId));
-      })
-      .catch((err) => console.log(err));
-  };
-
   const createPerson = (personParam) => {
     axios
       .post("http://localhost:8000/api/people", personParam)
@@ -45,11 +36,7 @@ const Main = () => {
         initalLastName=""
       />
       <hr />
-      <PersonList
-        people={people}
-        setPeople={setPeople}
-        deletePerson={deletePerson}
-      />
+      <PersonList people={people} setPeople={setPeople} />
     </div>
   );
 };
