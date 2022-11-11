@@ -8,6 +8,8 @@ const PersonForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmitProp({ firstName, lastName });
+    setFirstName("");
+    setLastName("");
   };
 
   return (
@@ -18,7 +20,7 @@ const PersonForm = (props) => {
         <input
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
-          value={firstName}
+          value={firstName || ""}
         />
       </p>
       <p>
@@ -27,7 +29,7 @@ const PersonForm = (props) => {
         <input
           type="text"
           onChange={(e) => setLastName(e.target.value)}
-          value={lastName}
+          value={lastName || ""}
         />
       </p>
       <input type="submit" />
