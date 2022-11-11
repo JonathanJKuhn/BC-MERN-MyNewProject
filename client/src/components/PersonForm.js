@@ -1,38 +1,38 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from "react";
 
 const PersonForm = (props) => {
-    const {people, setPeople} = props
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
+  const { onSubmitProp, initialFirstName, initialLastName } = props;
+  const [firstName, setFirstName] = useState(initialFirstName);
+  const [lastName, setLastName] = useState(initialLastName);
 
-    const onSubmitHandler = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:8000/api/people', {
-            firstName,
-            lastName
-        })
-            .then(res => {
-                console.log(res)
-                console.log(res.data)
-                setPeople([...people, res.data])
-            })
-            .catch(err => console.log(err))
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmitProp({ firstName, lastName });
+  };
 
-    return (
-        <form onSubmit={onSubmitHandler}>
-            <p>
-                <label>First Name</label><br/>
-                <input type="text" onChange={(e) => setFirstName(e.target.value)} />
-            </p>
-            <p>
-                <label>Last Name</label><br />
-                <input type="text" onChange={(e) => setLastName(e.target.value)}/>
-            </p>
-            <input type="submit" />
-        </form>
-    )
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <p>
+        <label>First Name</label>
+        <br />
+        <input
+          type="text"
+          onChange={(e) => setFirstName(e.target.value)}
+          value={firstName}
+        />
+      </p>
+      <p>
+        <label>Last Name</label>
+        <br />
+        <input
+          type="text"
+          onChange={(e) => setLastName(e.target.value)}
+          value={lastName}
+        />
+      </p>
+      <input type="submit" />
+    </form>
+  );
+};
 
-export default PersonForm
+export default PersonForm;

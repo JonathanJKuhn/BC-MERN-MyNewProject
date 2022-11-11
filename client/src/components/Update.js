@@ -1,30 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import PersonForm from "./PersonForm";
 
-const Update = (props) => {
+const Update = () => {
   const { id } = useParams();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
+  const [person, setPerson] = useState({});
+  const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/people/${id}`)
       .then((res) => {
-        setFirstName(res.data.firstName);
-        setLastName(res.data.lastName);
+        setPerson(res.data);
+        setLoaded(true);
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  const updatePerson = (e) => {
-    e.preventDefault();
+  const updatePerson = (personParam) => {
     axios
-      .put(`http://localhost:8000/api/people/${id}`, {
-        firstName,
-        lastName,
-      })
+      .put(`http://localhost:8000/api/people/${id}`, personParam)
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -35,33 +32,13 @@ const Update = (props) => {
   return (
     <div>
       <h1>Update a Person</h1>
-      <form onSubmit={updatePerson}>
-        <p>
-          <label>First Name</label>
-          <br />
-          <input
-            type="text"
-            name="firstName"
-            value={firstName}
-            onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-          />
-        </p>
-        <p>
-          <label>Last Name</label>
-          <br />
-          <input
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-          />
-        </p>
-        <input type="submit" value="submit" />
-      </form>
+      {loaded && (
+        <PersonForm
+          onSubmitProp={updatePerson}
+          initialFirstName={person.firstName}
+          initialLastName={person.lastName}
+        />
+      )}
     </div>
   );
 };

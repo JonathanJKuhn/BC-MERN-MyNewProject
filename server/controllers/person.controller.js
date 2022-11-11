@@ -14,7 +14,6 @@ module.exports.createPerson = (req, res) => {
 module.exports.getAllPeople = (req, res) => {
   Person.find({})
     .then((persons) => {
-      console.log(persons);
       res.json(persons);
     })
     .catch((err) => {

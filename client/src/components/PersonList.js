@@ -1,30 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const PersonList = (props) => {
-  const { removeFromDom, people, setPeople } = props;
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/people")
-      .then((res) => {
-        console.log(res.data);
-        setPeople(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setPeople]);
-
-  const deletePerson = (personId) => {
-    axios
-      .delete(`http://localhost:8000/api/people/${personId}`)
-      .then((res) => {
-        removeFromDom(personId);
-      })
-      .catch((err) => console.log(err));
-  };
+  const { deletePerson, people } = props;
 
   return (
     <div>
